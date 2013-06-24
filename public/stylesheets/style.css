@@ -1,0 +1,41 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#projects .project {
+	height: 40px;
+	margin-bottom: 16px;
+	background-color: #999;
+	position: relative;
+}
+
+#projects .progress {
+	height: 100%;
+	background-color: #333;
+}
+
+#projects span.label {
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-size: 40px;
+}
+
+/* Traffic lights palette credit: http://www.colourlovers.com/palette/1881274/traffic_lights */
+
+#projects span.rare {
+	color: #E1645E;
+}
+
+#projects span.medium {
+	color: #D6CF65;
+}
+
+#projects span.well {
+	color: #A4C059;
+}
