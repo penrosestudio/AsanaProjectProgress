@@ -1,6 +1,11 @@
 $(document).ready(function() {
-	var $projects = $('#projects');
-	$.getJSON('/tasks?workspace=428229307755', function(resp) {
+	var $projects = $('#projects'),
+		workspace = window.location.search.split('=')[1];
+	if(!workspace) {
+		$projects.text('no workspace set, try one of the links above');
+		return;
+	}
+	$.getJSON('/tasks?workspace='+workspace, function(resp) {
 		var projects = resp.projects,
 			workspace = resp.workspace;
 		$projects.empty();
