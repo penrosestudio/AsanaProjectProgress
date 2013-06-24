@@ -1,5 +1,7 @@
 {
   "name": "AsanaProjectProgress",
+  "subdomain": "asana-project-progress",
+  "description": "Tool to analyse progress through Asana projects",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,5 +11,8 @@
     "express": "3.2.6",
     "jade": "*",
     "request": "*"
+  },
+  "engines": {
+    "node": "0.8.x"
   }
 }
