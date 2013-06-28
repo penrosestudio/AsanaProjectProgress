@@ -2,7 +2,7 @@
   "name": "AsanaProjectProgress",
   "subdomain": "asana-project-progress",
   "description": "Tool to analyse progress through Asana projects",
-  "version": "0.0.1-7",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
     "start": "node app.js"

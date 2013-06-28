@@ -6,11 +6,15 @@ $(document).ready(function() {
 		return;
 	}
 	$.getJSON('/tasks?workspace='+workspace, function(resp) {
-		var projects = resp.projects,
+		var projects = resp.projects.sort(function(a,b) {
+				return a.recentModifiedDate < b.recentModifiedDate ? 1 : (a.recentModifiedDate > b.recentModifiedDate ? -1 : 0);
+			}),
 			workspace = resp.workspace;
+		console.log(projects);
 		$projects.empty();
-		$.each(projects, function(name, project) {
-			var tasks = project.tasks,
+		$.each(projects, function(i, project) {
+			var name = project.name,
+				tasks = project.tasks,
 				completed = project.completed,
 				percentage = tasks!==0 ? Math.round((completed / tasks)*100) : 100,
 				labelClass = percentage > 66 ? 'well' : (percentage > 33 ? 'medium' : 'rare');
@@ -18,12 +22,14 @@ $(document).ready(function() {
 				// don't bother showing empty projects
 				return true;
 			}
-			$('<div class="project"></div>').append(
-				$('<div class="progress"></div>')
-					.width(percentage+'%')
-			).append(
-				$('<span class="label '+labelClass+'">'+name+'</span>')
-			).appendTo($projects);
+			$('<div class="project"></div>')
+				.height(40+tasks)
+				.append(
+					$('<div class="progress"></div>')
+						.width(percentage+'%')
+				).append(
+					$('<span class="label '+labelClass+'">'+name+'</span>')
+				).appendTo($projects);
 		});
 	});
 });

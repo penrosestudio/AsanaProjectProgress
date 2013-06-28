@@ -1,16 +1,16 @@
 /*
-AsanaProjectProgress - v0.0.1, June 24th 2013
+AsanaProjectProgress - v0.0.2, June 24th 2013
 
 Provides a list of projects in a workspace and a visual indication of how far through each project you are
 
-ChangeLog:
-	- 24/06/2013 starting dev
-		- processing of the server-side response for projects
-		- processing of the server-side response for tasks
+Changelog:
+	see /public/CHANGELOG.txt
 
 Next:
-	- webpage that communicates with server-side API to load in tasks for the projects across a workspace
 	- some nice design for the webpage
+Ideas:
+	- make the vertical height of a project proportional to the number of tasks in it
+	- order by recently edited status (and maybe label with last-edited date)
 
 Note for use: Asana rate limit is around 100 requests per minute, which is a small number of executions of this app. It will make sense to cache the results.
 
@@ -86,13 +86,13 @@ app.get('/tasks', function(req, res) {
 		},
 		output = {
 			workspace: workspace,
-			projects: {}
+			projects: []
 		};
 	if(!workspace) {
 		res.send('no workspace query parameter provided');
 		return;
 	}
-	request.get("https://app.asana.com/api/1.0/workspaces/"+workspace+"/projects?archived=false", requestOptions, function(error, resp, body) {
+	request.get("https://app.asana.com/api/1.0/workspaces/"+workspace+"/projects?archived=false&opt_fields=name,id,modified_at", requestOptions, function(error, resp, body) {
 		if(error) {
 			res.send("Error:<br><br>"+error);
 			return;
@@ -108,12 +108,15 @@ app.get('/tasks', function(req, res) {
 				}
 				var project = projects.pop(),
 					projectId = project.id,
-					projectName = project.name;
-				output.projects[projectName] = {
-					tasks: 0,
-					completed: 0
-				};
-				request.get("https://app.asana.com/api/1.0/tasks?project="+projectId+"&opt_fields=completed", requestOptions, function(error, resp, body) {
+					projectName = project.name,
+					projectObj = {
+						name: projectName,
+						tasks: 0,
+						completed: 0,
+						recentModifiedDate: null
+					};
+				output.projects.push(projectObj);
+				request.get("https://app.asana.com/api/1.0/tasks?project="+projectId+"&opt_fields=completed,modified_at", requestOptions, function(error, resp, body) {
 					if(!error) {
 						var tasks = body.data,
 							analyseTasks = function(callback) {
@@ -124,10 +127,17 @@ app.get('/tasks', function(req, res) {
 									return;
 								}
 								var task = tasks.pop();
+								if(!projectObj.recentModifiedDate) {
+									projectObj.recentModifiedDate = task.modified_at;
+								} else {
+									if(task.modified_at>projectObj.recentModifiedDate) {
+										projectObj.recentModifiedDate = task.modified_at;
+									}
+								}
 								// {"id":4348482230258,"name":"Website:","completed":false}
-								output.projects[projectName].tasks++;
+								projectObj.tasks++;
 								if(task.completed) {
-									output.projects[projectName].completed++;
+									projectObj.completed++;
 								}
 								analyseTasks(callback);
 							};

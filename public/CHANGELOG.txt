@@ -1,0 +1,9 @@
+CHANGELOG
+
+- 27/06/2013 v0.0.2
+	- updating to order projects by most recently edited task
+	- height of project bar proportional to number of tasks - as an alternative to width as indicator
+- 24/06/2013 v0.0.1
+	- processing of the server-side response for projects
+	- processing of the server-side response for tasks
+	- webpage that communicates with server-side API to load in tasks for the projects across a workspace
