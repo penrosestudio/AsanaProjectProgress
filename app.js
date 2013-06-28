@@ -7,10 +7,14 @@ Changelog:
 	see /public/CHANGELOG.txt
 
 Next:
-	- some nice design for the webpage
+	- ?
 Ideas:
-	- make the vertical height of a project proportional to the number of tasks in it
-	- order by recently edited status (and maybe label with last-edited date)
+	- maybe label with last-edited date
+	- take into account the created-date of tasks to adjust the height of the project bar as you go along
+		- the completed_at date would track the created_at line, but there would always be less
+		- an effect of this would be that progress would be measured not by a horizontal direction, but by a vertical progress
+		- also, you'd want to set a lower limit (40px to continue the trend) for the height of bars, and grow from there
+			- but somehow you'd not want the first completed task to fill up the majority of the vertical space...
 
 Note for use: Asana rate limit is around 100 requests per minute, which is a small number of executions of this app. It will make sense to cache the results.
 

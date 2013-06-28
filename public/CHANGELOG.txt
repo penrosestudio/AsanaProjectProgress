@@ -1,5 +1,7 @@
 CHANGELOG
 
+- 28/06/2013 v0.0.2-1
+	- some nice design (thanks Josh!)
 - 27/06/2013 v0.0.2
 	- updating to order projects by most recently edited task
 	- height of project bar proportional to number of tasks - as an alternative to width as indicator
