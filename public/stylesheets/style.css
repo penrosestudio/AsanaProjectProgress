@@ -1,39 +1,53 @@
 body {
-  padding: 50px;
+  padding: 3%;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #313c40;
+  color: #c4e8f7;
 }
 
 a {
   color: #00B7FF;
 }
 
+#projects {
+	margin-top: 20px;
+}
+
 #projects .project {
 	height: 40px;
-	margin-bottom: 16px;
-	background-color: #999;
+	margin-bottom: 1px;
+	background-color: #b9ced7;
 	position: relative;
 }
 
 #projects .progress {
 	height: 100%;
-	background-color: #333;
+	background-color: #83a1ad;
+	border-right: 1px solid #313c40;
 }
 
 #projects span.label {
 	position: absolute;
-	top: 0;
+	top: 50%;
+	margin-top: -10px;
 	left: 0;
-	font-size: 40px;
+	font-size: 12px;
+	background-color: #313c40;
+	padding: 3px 10px 3px 2px;
+	letter-spacing: 1px;
 }
 
-/* Traffic lights palette credit: http://www.colourlovers.com/palette/1881274/traffic_lights */
+/* 	
+	Traffic lights palette credit: http://www.colourlovers.com/palette/1881274/traffic_lights 
+	edited amber for legibility
+*/
 
 #projects span.rare {
 	color: #E1645E;
 }
 
 #projects span.medium {
-	color: #D6CF65;
+	color: #e8bf30;
 }
 
 #projects span.well {
