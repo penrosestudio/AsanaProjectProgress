@@ -1,5 +1,5 @@
 /*
-AsanaProjectProgress - v0.0.2-2-experimental, June 30th 2013
+AsanaProjectProgress - v0.0.3-experimental, June 30th 2013
 
 Provides a list of projects in a workspace and a visual indication of how far through each project you are
 
