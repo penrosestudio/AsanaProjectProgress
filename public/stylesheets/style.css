@@ -18,12 +18,22 @@ a {
 	margin-bottom: 1px;
 	background-color: #b9ced7;
 	position: relative;
+	overflow: hidden;
 }
 
 #projects .progress {
 	height: 100%;
 	background-color: #83a1ad;
 	border-right: 1px solid #313c40;
+}
+
+#projects .task {
+	background-color: #83a1ad;
+	position: absolute;
+}
+
+#projects .completed {
+	background-color: green;
 }
 
 #projects span.label {
