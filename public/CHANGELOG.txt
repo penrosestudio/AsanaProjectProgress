@@ -1,7 +1,13 @@
 CHANGELOG
 
+<<<<<<< HEAD
 - 24/10/2013 v0.0.3
   - adding archived tasks into the view (due to API supporting this)
+- 30/06/2013 v0.0.3-experimental
+	 - experiment with the horizontal positions of the task bars being determined by their created date or completed date
+		- what am I solving with this?
+		- I can see the spread of created & completed over time, to get an idea of how progress is, er, progressing
+		- I can see how long it's been (relatively) since the project was progressed
 - 28/06/2013 v0.0.2-1
 	- some nice design (thanks Josh!)
 - 27/06/2013 v0.0.2

@@ -96,7 +96,7 @@ app.get('/tasks', function(req, res) {
 		res.send('no workspace query parameter provided');
 		return;
 	}
-	request.get("https://app.asana.com/api/1.0/workspaces/"+workspace+"/projects?archived=false&opt_fields=name,id,modified_at", requestOptions, function(error, resp, body) {
+	request.get("https://app.asana.com/api/1.0/workspaces/"+workspace+"/projects?archived=false&opt_fields=name,id,modified_at,created_at", requestOptions, function(error, resp, body) {
 		if(error) {
 			res.send("Error:<br><br>"+error);
 			return;
@@ -115,12 +115,15 @@ app.get('/tasks', function(req, res) {
 					projectName = project.name,
 					projectObj = {
 						name: projectName,
-						tasks: 0,
-						completed: 0,
+						tasks: [],
+						taskCount: 0,
+						startDate: project.created_at, // TO-DO: decided whether to change this to the creation date of the first available task
+						completed: [],
+						completedCount: 0,
 						recentModifiedDate: null
 					};
 				output.projects.push(projectObj);
-				request.get("https://app.asana.com/api/1.0/tasks?project="+projectId+"&include_archived=true&opt_fields=completed,modified_at", requestOptions, function(error, resp, body) {
+				request.get("https://app.asana.com/api/1.0/tasks?project="+projectId+"&include_archived=true&opt_fields=completed,modified_at,created_at,completed_at", requestOptions, function(error, resp, body) {
 					if(!error) {
 						var tasks = body.data,
 							analyseTasks = function(callback) {
@@ -131,6 +134,7 @@ app.get('/tasks', function(req, res) {
 									return;
 								}
 								var task = tasks.pop();
+								// check if task is most recently modified event in project
 								if(!projectObj.recentModifiedDate) {
 									projectObj.recentModifiedDate = task.modified_at;
 								} else {
@@ -138,19 +142,32 @@ app.get('/tasks', function(req, res) {
 										projectObj.recentModifiedDate = task.modified_at;
 									}
 								}
+								// check if task is earliest event in project
+								if(!projectObj.earliestTaskCreationDate) {
+									projectObj.earliestTaskCreationDate = task.created_at;
+								} else {
+									if(task.created_at<projectObj.earliestTaskCreationDate) {
+										projectObj.earliestTaskCreationDate = task.created_at;
+									}
+								}
+								
 								// {"id":4348482230258,"name":"Website:","completed":false}
-								projectObj.tasks++;
+								projectObj.taskCount++;
+								projectObj.tasks.push(task);
 								if(task.completed) {
-									projectObj.completed++;
+									projectObj.completedCount++;
+									projectObj.completed.push(task);
 								}
 								analyseTasks(callback);
 							};
 						analyseTasks(function() {
 							/*
-							// shortcut to just process one project
-							finalCallback();
-							return;
-							*/
+if(projectObj.taskCount>2) {
+								// shortcut to just process projects until one that has more than 2 tasks
+								finalCallback();
+								return;
+							}
+*/
 							// callback after all tasks for the project are analysed
 							getNextProjectTasks(finalCallback);
 						});
