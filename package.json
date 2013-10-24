@@ -2,7 +2,7 @@
   "name": "AsanaProjectProgress",
   "subdomain": "asana-project-progress",
   "description": "Tool to analyse progress through Asana projects",
-  "version": "0.0.3-3",
+  "version": "0.0.3-6",
   "private": true,
   "scripts": {
     "start": "node app.js"
@@ -10,7 +10,7 @@
   "dependencies": {
     "express": "3.2.6",
     "jade": "*",
-    "request": "*"
+    "request": "2.21.0"
   },
   "engines": {
     "node": "0.8.x"
