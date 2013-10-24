@@ -157,6 +157,7 @@ app.get('/tasks', function(req, res) {
 					}
 				});
 			};
+		console.log('workspace response',body);
 		getNextProjectTasks(function() {
 			// callback after all projects are requested
 			console.log('final callback');
