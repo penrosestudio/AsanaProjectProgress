@@ -120,7 +120,7 @@ app.get('/tasks', function(req, res) {
 						recentModifiedDate: null
 					};
 				output.projects.push(projectObj);
-				request.get("https://app.asana.com/api/1.0/tasks?project="+projectId+"&opt_fields=completed,modified_at", requestOptions, function(error, resp, body) {
+				request.get("https://app.asana.com/api/1.0/tasks?project="+projectId+"&include_archived=true&opt_fields=completed,modified_at", requestOptions, function(error, resp, body) {
 					if(!error) {
 						var tasks = body.data,
 							analyseTasks = function(callback) {
