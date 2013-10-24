@@ -1,5 +1,7 @@
 CHANGELOG
 
+- 24/10/2013 v0.0.3
+  - adding archived tasks into the view (due to API supporting this)
 - 28/06/2013 v0.0.2-1
 	- some nice design (thanks Josh!)
 - 27/06/2013 v0.0.2
